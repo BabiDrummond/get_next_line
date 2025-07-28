@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:48:11 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/27 22:16:05 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:25:58 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int	count_digits(int n, int base)
+static int	count_digits(long n, int base)
 {
 	int	len;
 
@@ -32,7 +32,7 @@ static int	count_digits(int n, int base)
 	return (len);
 }
 
-int	ft_putnbr_base_fd(long n, char *set, int base, int fd)
+int	ft_putnbr_base(long n, char *set, int base)
 {
 	int	digits;
 
@@ -40,11 +40,11 @@ int	ft_putnbr_base_fd(long n, char *set, int base, int fd)
 	if (n < 0)
 	{
 		n *= -1;
-		write(fd, "-", 1);
+		write(1, "-", 1);
 	}
 	if (n / base)
-		ft_putnbr_base_fd(n / base, set, base, fd);
-	write(fd, &set[n % base], 1);
+		ft_putnbr_base(n / base, set, base);
+	write(1, &set[n % base], 1);
 	return (digits);
 }
 
@@ -52,6 +52,6 @@ int	ft_putnbr_base_fd(long n, char *set, int base, int fd)
 int main(void)
 {
 	#include <stdio.h>
-	printf("\n%d\n", ft_putnbr_base_fd(46, "0123456789abcdef", 16, 1));
+	printf("\n%d\n", ft_putnbr_base(4294967295, "0123456789", 10));
 }
 */
