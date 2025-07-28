@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:40:22 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/23 17:03:30 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:14:26 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int	ft_putstr_fd(char *s, int fd)
 
 	i = 0;
 	while (s[i])
-		ft_putchar_fd(s[i++], fd);
+		write(fd, &s[i++], 1);
 	return (i);
 }
