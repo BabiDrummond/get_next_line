@@ -6,12 +6,12 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:29:46 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/28 19:29:39 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 00:10:12 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -19,6 +19,8 @@
 
 int	ft_printf(const char *s, ...);
 int	ft_putstr(char *s);
-int	ft_putnbr_base(long n, char *set, int base);
+int	ft_putnbr(int n, char *set, int base);
+int	ft_putuint(unsigned int n, char *set, int base);
+int	ft_putptr(unsigned long long p);
 
 #endif

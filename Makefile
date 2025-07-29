@@ -2,8 +2,10 @@ NAME = libftprintf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
 SRC = ft_printf.c	\
-	ft_putnbr_base.c	\
-	ft_putstr.c
+	ft_putstr.c		\
+	ft_putnbr.c	  	\
+	ft_putuint.c	\
+	ft_putptr.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
@@ -15,7 +17,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)

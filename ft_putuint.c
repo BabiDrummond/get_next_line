@@ -1,33 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putuint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 07:40:22 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 00:14:15 by bmoreira         ###   ########.fr       */
+/*   Created: 2025/07/13 07:48:11 by bmoreira          #+#    #+#             */
+/*   Updated: 2025/07/29 00:10:16 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(char *s)
+static int	count_digits(unsigned int n, int base)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	if (!s)
-		return (write(1, "(null)", 6));
-	while (s[i])
-		write(1, &s[i++], 1);
-	return (i);
+	len = 0;
+	if (n == 0)
+		len++;
+	while (n)
+	{
+		n = n / base;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_putuint(unsigned int n, char *set, int base)
+{
+	int	digits;
+
+	digits = count_digits(n, base);
+	if (n / base)
+		ft_putuint(n / base, set, base);
+	write(1, &set[n % base], 1);
+	return (digits);
 }
 
 /*
 int main(void)
 {
 	#include <stdio.h>
-	printf("\n%d", ft_putstr("ola"));
+	printf("\n%d\n", ft_putuint(4294967295, "0123456789abcdef", 16));
 }
 */
