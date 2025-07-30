@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:58 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 22:37:26 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/30 01:10:44 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_printf(const char *s, ...)
 }
 /*
 int main(void)
-{
+{ 
 	#include <stdio.h>
 	#include <limits.h>
 	
