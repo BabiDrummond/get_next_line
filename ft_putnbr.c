@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:48:11 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 00:10:20 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:06:02 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,10 @@ static int	count_digits(int n, int base)
 	len = 0;
 	if (n == 0)
 		len++;
-	if (n < 0)
-	{
-		len++;
+	if (n < 0 && ++len)
 		n *= -1;
-	}
-	while (n)
-	{
+	while (n && ++len)
 		n = n / base;
-		len++;
-	}
 	return (len);
 }
 
@@ -37,13 +31,13 @@ int	ft_putnbr(int n, char *set, int base)
 	int	digits;
 
 	if (n == -2147483648)
-		return (write(1, "-2147483648", 11));
+		return (ft_putstr("-2147483648"));
 	digits = count_digits(n, base);
-	if (n < 0 && write(1, "-", 1))
+	if (n < 0 && ft_putchar('-'))
 		n *= -1;
 	if (n / base)
 		ft_putnbr(n / base, set, base);
-	write(1, &set[n % base], 1);
+	ft_putchar(set[n % base]);
 	return (digits);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:58 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 00:10:23 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:02:20 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,55 +22,22 @@ int	check_case(char *set, char c)
 	return (0);
 }
 
-int	ft_putchar(int c)
-{
-	return (write(1, &c, 1));
-}
-// int	put_case(char *s, va_list args)
-// {
-// 	while (*s)
-// 	{
-// 		if (*s == '%' && *(s + 1) == '%' && s++)
-// 			ft_putchar(*s);
-// 		if (*s == '%' && *(s + 1) == 'c' && s++)
-// 			ft_putchar(va_arg(args, int));
-// 		if (*s == '%' && *(s + 1) == 's' && s++)
-// 			ft_putstr(va_arg(args, char *));
-// 		if (*s == '%' && (*(s + 1) == 'd' || *(s + 1) == 'i') && s++)
-// 			ft_putnbr(va_arg(args, int), "0123456789", 10);
-// 		if (*s == '%' && *(s + 1) == 'u' && s++)
-// 			ft_putuint(va_arg(args, unsigned int), "0123456789", 10);
-// 		if (*s == '%' && *(s + 1) == 'p' && s++)
-// 			ft_putptr(va_arg(args, unsigned long long));
-// 		if (*s == '%' && *(s + 1) == 'x' && s++)
-// 			ft_putuint(va_arg(args, unsigned int), "0123456789abcedf", 16);
-// 		if (*s == '%' && *(s + 1) == 'X' && s++)
-// 			ft_putuint(va_arg(args, unsigned int), "0123456789ABCDEF", 16);
-// 		else
-// 			ft_putchar(*s++);
-// 		s++;
-// 	}
-// 	return (0);
-// }
-
-int	put_case(char c, void *p)
+int	put_case(char c, va_list args)
 {
 	if (c == 'c')
-		return (ft_putchar((int)(long) p));
+		return (ft_putchar(va_arg(args, int)));
 	if (c == 's')
-		return (ft_putstr((char *) p));
+		return (ft_putstr(va_arg(args, char *)));
 	if (c == 'd' || c == 'i')
-		return (ft_putnbr((int)(long) p, "0123456789", 10));
+		return (ft_putnbr(va_arg(args, int), "0123456789", 10));
 	if (c == 'u')
-		return (ft_putuint((unsigned int)(unsigned long) p, "0123456789", 10));
+		return (ft_putuint(va_arg(args, unsigned int), "0123456789", 10));
 	if (c == 'p')
-		return (ft_putptr((unsigned long long) p));
+		return (ft_putptr(va_arg(args, unsigned long)));
 	if (c == 'x')
-		return (ft_putuint((unsigned int)
-				(unsigned long) p, "0123456789abcedf", 16));
+		return (ft_putuint(va_arg(args, unsigned int), "0123456789abcdef", 16));
 	if (c == 'X')
-		return (ft_putuint((unsigned int)
-				(unsigned long) p, "0123456789ABCDEF", 16));
+		return (ft_putuint(va_arg(args, unsigned int), "0123456789ABCDEF", 16));
 	return (0);
 }
 
@@ -83,8 +50,8 @@ int	ft_printf(const char *s, ...)
 	count = 0;
 	while (*s)
 	{
-		if (*s == '%' && check_case("csdiupxX", *++s))
-			count += put_case(*s++, va_arg(args, void *));
+		if (*s == '%' && check_case("cspdiuxX", *++s))
+			count += put_case(*s++, args);
 		else
 			count += ft_putchar(*s++);
 	}
@@ -94,9 +61,38 @@ int	ft_printf(const char *s, ...)
 /*
 int main(void)
 {
-	char c = 'o';
-	unsigned int u = 34231;
-	int i = -23;
-	ft_printf("aa\n%c%u%iaa%%%\n", c, u, i);
+	#include <stdio.h>
+	#include <limits.h>
+	
+	char *s = "hello";
+	char c = '*';
+	unsigned int u = 4294967295;
+	int i = -2147483648;
+	printf("\nTotal c: %d\n", ft_printf("%c", c));
+	printf("\nTotal c: %d\n", printf("%c", c));
+
+	printf("\nTotal s: %d\n", ft_printf("%s", s));
+	printf("\nTotal s: %d\n", printf("%s", s));
+	
+	printf("\nTotal i: %d\n", ft_printf("%i", i));
+	printf("\nTotal i: %d\n", printf("%i", i));
+
+	printf("\nTotal d: %d\n", ft_printf("%d", i));
+	printf("\nTotal d: %d\n", printf("%d", i));
+
+	printf("\nTotal u: %d\n", ft_printf("%u", u));
+	printf("\nTotal u: %d\n", printf("%u", u));
+
+	printf("\nTotal x: %d\n", ft_printf("%x", -99));
+	printf("\nTotal x: %d\n", printf("%x", -99));
+
+	printf("\nTotal X: %d\n", ft_printf("%X", u));
+	printf("\nTotal X: %d\n", printf("%X", u));
+
+	printf("\nTotal p: %d\n", ft_printf("%p", LONG_MAX));
+	printf("\nTotal p: %d\n", printf("%p", LONG_MAX));
+	
+	printf("\nTotal: %d\n", ft_printf("aa\n%c%u%iaa%%", c, u, i));
+	printf("\nTotal: %d\n", printf("aa\n%c%u%iaa%%", c, u, i));
 }
 */

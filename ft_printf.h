@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:29:46 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 00:10:12 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:03:59 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 # include <stdarg.h>
 
 int	ft_printf(const char *s, ...);
+int	ft_putchar(int c);
 int	ft_putstr(char *s);
 int	ft_putnbr(int n, char *set, int base);
 int	ft_putuint(unsigned int n, char *set, int base);
-int	ft_putptr(unsigned long long p);
+int	ft_putptr(unsigned long p);
 
 #endif
