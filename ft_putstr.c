@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:40:22 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 21:01:45 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:37:41 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,3 @@ int	ft_putstr(char *s)
 		ft_putchar(s[i++]);
 	return (i);
 }
-
-/*
-int main(void)
-{
-	#include <stdio.h>
-	printf("\n%d", ft_putstr("ola"));
-}
-*/

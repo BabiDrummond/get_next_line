@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:48:11 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 21:50:15 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:37:55 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,3 @@ int	ft_putul(unsigned long n, char *set, int base)
 	ft_putchar(set[n % base]);
 	return (count_digits(n, base));
 }
-
-/*
-int main(void)
-{
-	#include <stdio.h>
-	printf("\n%d\n", ft_putuint(4294967295, "0123456789abcdef", 16));
-}
-*/

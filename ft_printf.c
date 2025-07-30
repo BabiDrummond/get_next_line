@@ -6,13 +6,13 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:58 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 21:57:02 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:37:26 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	check_case(char *set, char c)
+static int	check_case(char *set, char c)
 {
 	while (*set)
 	{
@@ -22,7 +22,7 @@ int	check_case(char *set, char c)
 	return (0);
 }
 
-int	put_case(char c, va_list args)
+static int	put_case(char c, va_list args)
 {
 	if (c == 'c')
 		return (ft_putchar(va_arg(args, int)));

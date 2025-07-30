@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 07:48:11 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 21:06:02 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:37:48 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,3 @@ int	ft_putnbr(int n, char *set, int base)
 	ft_putchar(set[n % base]);
 	return (digits);
 }
-
-/*
-int main(void)
-{
-	#include <stdio.h>
-	printf("\n%d\n", ft_putnbr(2147483647, "0123456789abcdef", 10));
-}
-*/
