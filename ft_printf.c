@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:58 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/07/29 21:02:20 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:57:02 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	put_case(char c, va_list args)
 	if (c == 'd' || c == 'i')
 		return (ft_putnbr(va_arg(args, int), "0123456789", 10));
 	if (c == 'u')
-		return (ft_putuint(va_arg(args, unsigned int), "0123456789", 10));
+		return (ft_putul(va_arg(args, unsigned int), "0123456789", 10));
 	if (c == 'p')
 		return (ft_putptr(va_arg(args, unsigned long)));
 	if (c == 'x')
-		return (ft_putuint(va_arg(args, unsigned int), "0123456789abcdef", 16));
+		return (ft_putul(va_arg(args, unsigned int), "0123456789abcdef", 16));
 	if (c == 'X')
-		return (ft_putuint(va_arg(args, unsigned int), "0123456789ABCDEF", 16));
+		return (ft_putul(va_arg(args, unsigned int), "0123456789ABCDEF", 16));
 	return (0);
 }
 
@@ -90,7 +90,7 @@ int main(void)
 	printf("\nTotal X: %d\n", printf("%X", u));
 
 	printf("\nTotal p: %d\n", ft_printf("%p", LONG_MAX));
-	printf("\nTotal p: %d\n", printf("%p", LONG_MAX));
+	//printf("\nTotal p: %d\n", printf("%p", LONG_MAX));
 	
 	printf("\nTotal: %d\n", ft_printf("aa\n%c%u%iaa%%", c, u, i));
 	printf("\nTotal: %d\n", printf("aa\n%c%u%iaa%%", c, u, i));
