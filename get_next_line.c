@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 01:19:48 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/08/05 21:25:53 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:23:12 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(const char *s)
 	return (temp);
 }
 
-int	ft_strchr(char *s, char c)
+int	end_of_line(char *s)
 {
 	int	i;
 
@@ -64,9 +64,9 @@ int	ft_strchr(char *s, char c)
 	if (!s)
 		return (0);
 	while (s[i])
-		if (s[i++] == c)
-			return (--i);
-	return (i);
+		if (s[i++] == '\n')
+			return (i);
+	return (0);
 }
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -81,6 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		*new_str++ = *s1++;
 	while (*s2)
 		*new_str++ = *s2++;
+	printf("strjoin: %s\n", temp);
 	free((char *)s1);
 	free((char *)s2);
 	return (temp);
@@ -101,9 +102,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr = ft_calloc(len + 1, sizeof(char));
 	temp = substr;
 	if (!substr)
-		return (NULL);
+	return (NULL);
 	while (len--)
 		*substr++ = s[start++];
+	printf("substr: %s\n", temp);
 	return (temp);
 }
 
@@ -130,7 +132,10 @@ char	*get_line(char *buffer, size_t line_size)
 	line = ft_calloc(line_size + 1, sizeof(char));
 	if (!line)
 		return (NULL);
+	if (!line_size)
+		line_size = ft_strlen(buffer);
 	line = ft_substr(buffer, 0, line_size);
+	printf("line: %s\n", line);
 	return (line);
 }
 
@@ -142,10 +147,14 @@ char	*get_left(char *buffer, size_t line_size)
 	if (!left)
 		return (NULL);
 	left = ft_substr(buffer, line_size, BUFFER_SIZE - line_size);
-	free(buffer);
+	printf("left: %s\n", left);
 	return (left);
 }
 
+// quando ler? 1- buffer vazio. 2- buffer tem conteúdo mas não tem \n.
+// quando parar de ler? 1. buffer tem conteúdo e tem \n. 2. buffer tem conteúdo e não tem \n, mas tem \0.
+// caso 1: buffer vazio: ler para buffer normalmente
+// caso 2: buffer tem conteudo: checar se tem \n. se nao, checar se tem \0.
 char	*read_buffer(char *buffer, int fd)
 {
 	char	*temp;
@@ -153,49 +162,55 @@ char	*read_buffer(char *buffer, int fd)
 	if (!buffer)
 	{
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		if (buffer == NULL)
+		if (buffer == NULL || read(fd, buffer, BUFFER_SIZE) < 1)
 			return (NULL);
-		read(fd, buffer, BUFFER_SIZE);
 	}
-	else
+	while (!end_of_line(buffer))
 	{
 		temp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		if (temp == NULL)
-			return (NULL);
-		read(fd, temp, BUFFER_SIZE);
-		return (ft_strjoin(buffer, temp));
+		if (temp == NULL || read(fd, temp, BUFFER_SIZE) < 1)
+			break;
+		buffer = ft_strjoin(buffer, temp);
 	}
 	return (buffer);
 }
 
+
+// char	*read_buffer(int fd)
+// {
+// 	char	*buffer;
+	
+// 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+// 	if (!buffer)
+// 		return (NULL);
+// 	read(fd, buffer, BUFFER_SIZE);
+// 	return (buffer);
+// }
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
 	size_t		n;
 	
-	printf("1?");
-	while (!ft_strchr(buffer, '\n') && printf("2"))
-		buffer = read_buffer(buffer, fd);
-	n = ft_strchr(buffer, '\n');
-	printf("3");
+	buffer = read_buffer(buffer, fd);
+	if (!buffer)
+		return (NULL);
+	n = end_of_line(buffer);
 	line = get_line(buffer, n);
-	printf("4");
-	if (buffer[n + 1] == '\0' && printf("5"))
+	buffer = get_left(buffer, n);
+	if (!n || !buffer)
 		free(buffer);
-	else
-		buffer = get_left(buffer, n);
-	printf("6");
+	if (!line || !*line)
+		return (free(line), NULL);
 	return (line);
 }
 
 int main(void)
 {
-	printf("while?");
 	int fd = open("batatas.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
-	// close(fd);
+	printf("main: %s\n", get_next_line(fd));
+	printf("main: %s\n", get_next_line(fd));
+	printf("main: %s\n", get_next_line(fd));
+	printf("main: %s\n", get_next_line(fd));
+	close(fd);
 }
