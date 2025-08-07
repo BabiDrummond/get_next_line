@@ -6,7 +6,7 @@
 /*   By: bmoreira <bmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 01:19:48 by bmoreira          #+#    #+#             */
-/*   Updated: 2025/08/06 19:23:12 by bmoreira         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:30:51 by bmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (arr);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	len;
 
@@ -42,7 +42,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*new_s;
 	char	*temp;
@@ -68,30 +68,40 @@ int	end_of_line(char *s)
 			return (i);
 	return (0);
 }
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*new_str;
-	char	*temp;
 
-	new_str = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!new_str)
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	new = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	i = 0;
+	j = 0;
+	if (!new)
 		return (NULL);
-	temp = new_str;
-	while (*s1)
-		*new_str++ = *s1++;
-	while (*s2)
-		*new_str++ = *s2++;
-	printf("strjoin: %s\n", temp);
-	free((char *)s1);
-	free((char *)s2);
-	return (temp);
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		new[i + j] = s2[j];
+		j++;
+	}
+	//printf("strjoin: %s\n", new);
+	free(s1);
+	free(s2);
+	return (new);
 }
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	char	*temp;
 	size_t	s_len;
-	
+
 	s_len = 0;
 	while (s[s_len])
 		s_len++;
@@ -102,10 +112,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr = ft_calloc(len + 1, sizeof(char));
 	temp = substr;
 	if (!substr)
-	return (NULL);
+		return (NULL);
 	while (len--)
 		*substr++ = s[start++];
-	printf("substr: %s\n", temp);
+	//printf("substr: %s\n", temp);
 	return (temp);
 }
 
@@ -113,7 +123,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 // {
 // 	char	*left;
 // 	char	*line;
-	
 // 	left = ft_calloc(buffer_size - line_size + 1, sizeof(char));
 // 	line = ft_calloc(line_size + 1, sizeof(char));
 // 	if (!left || !line)
@@ -128,26 +137,29 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 char	*get_line(char *buffer, size_t line_size)
 {
 	char	*line;
-	
+
 	line = ft_calloc(line_size + 1, sizeof(char));
 	if (!line)
 		return (NULL);
 	if (!line_size)
 		line_size = ft_strlen(buffer);
 	line = ft_substr(buffer, 0, line_size);
-	printf("line: %s\n", line);
+	//printf("line: %s\n", line);
 	return (line);
 }
 
 char	*get_left(char *buffer, size_t line_size)
 {
 	char	*left;
-	
-	left = ft_calloc(BUFFER_SIZE - line_size + 1, sizeof(char));
+	size_t	left_size;
+
+	left_size = ft_strlen(buffer) - line_size;
+	left = ft_calloc(left_size + 1, sizeof(char));
 	if (!left)
 		return (NULL);
-	left = ft_substr(buffer, line_size, BUFFER_SIZE - line_size);
-	printf("left: %s\n", left);
+	left = ft_substr(buffer, line_size, left_size);
+	free(buffer);
+	//printf("left: %s\n", left);
 	return (left);
 }
 
@@ -158,7 +170,7 @@ char	*get_left(char *buffer, size_t line_size)
 char	*read_buffer(char *buffer, int fd)
 {
 	char	*temp;
-	
+
 	if (!buffer)
 	{
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -175,11 +187,9 @@ char	*read_buffer(char *buffer, int fd)
 	return (buffer);
 }
 
-
 // char	*read_buffer(int fd)
 // {
 // 	char	*buffer;
-	
 // 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 // 	if (!buffer)
 // 		return (NULL);
@@ -191,7 +201,9 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 	size_t		n;
-	
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = read_buffer(buffer, fd);
 	if (!buffer)
 		return (NULL);
@@ -205,12 +217,12 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main(void)
-{
-	int fd = open("batatas.txt", O_RDONLY);
-	printf("main: %s\n", get_next_line(fd));
-	printf("main: %s\n", get_next_line(fd));
-	printf("main: %s\n", get_next_line(fd));
-	printf("main: %s\n", get_next_line(fd));
-	close(fd);
-}
+// int main(void)
+// {
+// 	int fd = open("batatas.txt", O_RDONLY);
+// 	printf("main: %s", get_next_line(fd));
+// 	printf("main: %s", get_next_line(fd));
+// 	printf("main: %s", get_next_line(fd));
+// 	printf("main: %s", get_next_line(fd));
+// 	close(fd);
+// }
