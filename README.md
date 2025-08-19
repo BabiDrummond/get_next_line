@@ -15,13 +15,17 @@
 
 **Mandatory Part:**
 - The function must have the following prototype:
-```char *get_next_line(int fd);```
+```
+char *get_next_line(int fd);
+```
 - Must work with any valid file descriptor.
 - Must read and return one line per call.
 - Must return NULL in case of error or end of file.
 
 The project must be compilable with:
-```cc -Wall -Wextra -Werror -D BUFFER_SIZE=<n> get_next_line.c get_next_line_utils.c```
+```
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=<n> get_next_line.c get_next_line_utils.c
+```
 
 **Bonus Part:**
 - Support for multiple file descriptors simultaneously.
